@@ -3,17 +3,17 @@ on:
   push:
     branches: [main]
     paths-ignore: [.github/**]
-  pull_requests:
+  pull_request:
     branches: [main]
-  workflow_dispach:
-    schedule:
+  workflow_dispatch:
+  schedule:
       - cron: "0,30 8-18 * * 1-5"
-
-  jobs:
+jobs:
     SayHello:
-      runs-on: 
+      runs-on: ubuntu-22.04
       steps:
         - run: |
               echo "Hello!"
         - name: Checkout
           uses: actions/checkout@v7.0.0
+  
