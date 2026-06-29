@@ -1,8 +1,8 @@
 name: Test Build for Docker Action
 on:
   push:
-    branches: [ main ]
-    paths: [ my-action/** ]
+    branches: [main]
+    paths: [my-action/**]
   workflow_dispatch:
 
 jobs:
