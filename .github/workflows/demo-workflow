@@ -1,0 +1,19 @@
+name: My first workflow
+on:
+  push:
+    branches: [main]
+    paths-ignore: [.github/**]
+  pull_requests:
+    branches: [main]
+  workflow_dispach:
+    schedule:
+      - cron: "0,30 8-18 * * 1-5"
+
+  jobs:
+    SayHello:
+      runs-on: 
+      steps:
+        - run: |
+              echo "Hello!"
+        - name: Checkout
+          uses: actions/checkout@v7.0.0
