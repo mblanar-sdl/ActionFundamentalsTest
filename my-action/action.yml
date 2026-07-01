@@ -1,21 +1,20 @@
-name: Hello, World!
-description: Greet someone and record the time
-author: GitHub Actions
+name: Say Hello!
+description: Say Hello and record the time
+author: Melinda
 
 # Define your inputs here.
 inputs:
   who-to-greet:
-    description: Who to greet
-    required: true
-    default: World
+    description: "Who should we say Hello"
+    default: "World"
 
 # Define your outputs here.
 outputs:
   time:
-    description: The time we greeted you
+    description: "The time we say Hello"
 
 runs:
-  using: docker
-  image: Dockerfile
-  env:
-    INPUT_WHO_TO_GREET: ${{ inputs.who-to-greet }}
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{inputs.who-to-greet}}  
