@@ -1,22 +1,27 @@
-name: Test Build for Docker Action
+name: Hello
 on:
   push:
     branches: [main]
     paths: [my-action/**]
   workflow_dispatch:
+    inputs:
+      who-to-greet:
+        description: 'Who to greet'
+        type: string
+        required: true
 
 jobs:
-  test-action:
+  test-my-action:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.0
+        uses: actions/checkout@v7
 
       - name: Run my own container action
         id: hello-action
         uses: ./my-action
         with:
-          who-to-greet: '@mblanar-sdl'
+          who-to-greet: ${{inputs.who-to-greet}}
 
       - name: Output time set in the container
         run: echo "The time was ${{ steps.hello-action.outputs.time }} when the action said hello"
