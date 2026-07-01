@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy to'
+        description: "Environment to deploy to"
         type: environment
         required: true
 
@@ -13,32 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Build completed"
-  
+
   test:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
-    needs: Build
+    needs: build
+    if: github.event.inputs.environment == 'test'
     environment: test
     steps:
-      - run: echo "🧪 Testing..."
+      - run: echo "🧪 Running tests..."
 
-  Load-Test:
+  qa:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
-    needs: Build
-    environment: Load-Test
+    needs: build
+    if: github.event.inputs.environment == 'qa'
+    environment: qa
     steps:
       - run: |
-          echo "🧪 Testing..."
+          echo "🧪 Running QA tests..."
           sleep 15
 
-  Production:
+  dev:
     runs-on: ubuntu-latest
-    needs: [Test, Load-Test]
+    needs: build
+    if: github.event.inputs.environment == 'dev'
+    environment: dev
+    steps:
+      - run: echo "🚀 Deploying to Dev"
+
+  prod:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event.inputs.environment == 'prod'
     environment:
-      name: Production
+      name: prod
       url: https://writeabout.net
-    if: github.event.inputs.environment == 'Production'
     steps:
       - run: |
           echo "🚀 Step 1..."
